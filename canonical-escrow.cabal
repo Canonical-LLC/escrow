@@ -40,3 +40,15 @@ library
     , serialise
 
   hs-source-dirs:  src
+
+executable create-smart-contract
+  hs-source-dirs:       app
+  main-is:              Main.hs
+  ghc-options:          -Wall -Werror -threaded -rtsopts "-with-rtsopts=-T"
+
+  build-depends:        base
+                      , bytestring
+                      , cardano-api
+                      , canonical-escrow
+                      , plutus-ledger-api
+                      , cardano-ledger-alonzo

@@ -62,7 +62,7 @@ Next, run:
 scripts/compile.sh
 ```
 
-This will make the files `scripts/testnet/buy.addr` or `scripts/mainnet/buy.addr`.
+This will make the files `scripts/testnet/escrow.addr` or `scripts/mainnet/escrow.addr`.
 
 ## Example Transactions
 

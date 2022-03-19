@@ -2,6 +2,17 @@
   description = "A Plutus flake";
 
   inputs = {
+    # we use this to get newer versions of cardano-node and cardano-cli than are
+    # use in plutus-apps. we can probably get rid of this when plutus-apps is
+    # updated
+    cardano-node = {
+      url = "github:input-output-hk/cardano-node/1.34.1";
+    };
+
+    cardano-cli-balance-fixer = {
+      url = "github:Canonical-LLC/cardano-cli-balance-fixer";
+    };
+
     flake-utils.url = "github:numtide/flake-utils";
 
     plutus-apps.url = "github:input-output-hk/plutus-apps/plutus-starter-devcontainer/v1.0.14";
@@ -9,7 +20,7 @@
     pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
   };
 
-  outputs = { flake-utils, plutus-apps, pre-commit-hooks, ... }:
+  outputs = { cardano-cli-balance-fixer, cardano-node, flake-utils, plutus-apps, pre-commit-hooks, ... }:
     flake-utils.lib.eachSystem (import ./supported-systems.nix)
       (system:
         let
@@ -50,6 +61,8 @@
           };
 
           apps = {
+            inherit (cardano-node.apps.${system}) cardano-node cardano-cli;
+
             update-materialized = {
               type = "app";
               program = "${update-materialized}/bin/update-materialized";
@@ -68,7 +81,11 @@
               buildInputs = attrs.buildInputs ++ [
                 update-materialized
                 plutus.plutus-apps.haskell-language-server
-              ] ++ pre-commit.shellBuildInputs;
+                cardano-cli-balance-fixer.defaultPackage.${system}
+              ] ++ (with cardano-node.packages.${system}; [
+                cardano-node
+                cardano-cli
+              ]) ++ pre-commit.shellBuildInputs;
             });
 
           legacyPackages = pkgs;

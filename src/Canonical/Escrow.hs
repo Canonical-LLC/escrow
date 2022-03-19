@@ -12,7 +12,7 @@ module Canonical.Escrow
   ( Payout(..)
   , SwapState(..)
   , SwapTransition(..)
-  , swap
+  -- , swap
   ) where
 
 import Cardano.Api.Shelley (PlutusScript(..), PlutusScriptV1)
@@ -212,10 +212,13 @@ swapValidator st t ctx =
       OnOffer s -> (sOwner s, sMediator s, s)
       InEscrow _ e -> (sOwner . eSwap $ e, sMediator . eSwap $ e, eSwap e)
 
+    isBeforeDeadline :: Bool
     isBeforeDeadline = sDeadline theSwap `after` txInfoValidRange info
 
+    theSwapValue :: Value
     theSwapValue = sSwapValue theSwap
 
+    swapPayoutValue :: Value
     swapPayoutValue = mergePayoutsValue . sSwapPayouts $ theSwap
   in case st of
     OnOffer s -> case t of
@@ -225,13 +228,14 @@ swapValidator st t ctx =
 
       Buy bp ->
         let
+          unlockerPayoutValue :: Value
           unlockerPayoutValue = mergePayoutsValue . bpUnlockerPayouts $ bp
 
           scriptInputIsValid :: Bool
           scriptInputIsValid = scriptInput `geq` unlockerPayoutValue
 
           outputsAreValid :: Bool
-          outputsAreValid = scriptOutputValue `geq` mappend unlockerPayoutValue swapPayoutValue
+          outputsAreValid = scriptOutputValue `geq` (unlockerPayoutValue <> swapPayoutValue)
 
           outputDatumIsValid :: Bool
           outputDatumIsValid = scriptOutputDatum == InEscrow NoApproval (Escrow s bp)
@@ -250,8 +254,10 @@ swapValidator st t ctx =
         let
           theBuyer = bpBuyer . eBuyerPayouts $ escrow
 
-          unlockerPayoutValue = bpUnlockerPayouts . eBuyerPayouts $ escrow
+          unlockerPayoutValue :: Value
+          unlockerPayoutValue = mergePayoutsValue . bpUnlockerPayouts . eBuyerPayouts $ escrow
 
+          canApprove :: Bool
           canApprove = pkh `elem` [theOwner, theBuyer, theMediator]
 
           swapApprovedOutputIsValid =
@@ -267,7 +273,7 @@ swapValidator st t ctx =
             RejectedBy _ -> True
             ApprovedByRejectedBy _ _ -> True
 
-          scriptInputIsValid = scriptInput `geq` mappend unlockerPayoutValue swapPayoutValue
+          scriptInputIsValid = scriptInput `geq` (unlockerPayoutValue <> swapPayoutValue)
 
           sOutGeqIn = traceIfFalse "script output should be >= script input" (scriptOutputValue `geq` scriptInput)
 
@@ -331,13 +337,13 @@ instance ValidatorTypes Swapping where
   type DatumType Swapping = SwapState
   type RedeemerType Swapping = SwapTransition
 
-validator :: TypedValidator Swapping
-validator =
-  mkTypedValidator @Swapping
-    $$(PlutusTx.compile [|| swapValidator ||])
-    $$(PlutusTx.compile [|| wrap ||])
-  where
-    wrap = wrapValidator
+-- validator :: TypedValidator Swapping
+-- validator =
+--   mkTypedValidator @Swapping
+--     $$(PlutusTx.compile [|| swapValidator ||])
+--     $$(PlutusTx.compile [|| wrap ||])
+--   where
+--     wrap = wrapValidator
 
-swap :: PlutusScript PlutusScriptV1
-swap = PlutusScriptSerialised $ SBS.toShort $ LB.toStrict $ serialise $ validatorScript validator
+-- swap :: PlutusScript PlutusScriptV1
+-- swap = PlutusScriptSerialised $ SBS.toShort $ LB.toStrict $ serialise $ validatorScript validator
