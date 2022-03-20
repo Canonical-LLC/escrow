@@ -17,134 +17,138 @@ royaltyPkh=$(cat $tempDir/$BLOCKCHAIN_PREFIX/pkhs/royalities-pkh.txt)
 buyerPkh=$(cat $tempDir/$BLOCKCHAIN_PREFIX/pkhs/buyer-pkh.txt)
 
 cat << EOF > $tempDir/$BLOCKCHAIN_PREFIX/datums/$prefix/offer.json
-{
-  "constructor": 0,
+{ "constructor": 0,
   "fields": [
     {
-      "bytes": "$sellerPkh"
-    },
-    {
-      "map": [
+      "constructor": 0,
+      "fields": [
         {
-          "k": {
-            "bytes": "d6cfdbedd242056674c0e51ead01785497e3a48afbbb146dc72ee1e2"
-          },
-          "v": {
-            "map": [
-              {
-                "k": {
-                  "bytes": "123456"
-                },
-                "v": {
-                  "int": 1
-                }
-              }
-            ]
-          }
-        }
-      ]
-    },
-    {
-      "list": [
+          "bytes": "$sellerPkh"
+        },
         {
-          "constructor": 0,
-          "fields": [
+          "map": [
             {
-              "bytes": "$sellerPkh"
+              "k": {
+                "bytes": "d6cfdbedd242056674c0e51ead01785497e3a48afbbb146dc72ee1e2"
+              },
+              "v": {
+                "map": [
+                  {
+                    "k": {
+                      "bytes": "123456"
+                    },
+                    "v": {
+                      "int": 1
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "list": [
+            {
+              "constructor": 0,
+              "fields": [
+                {
+                  "bytes": "$sellerPkh"
+                },
+                {
+                  "map": [
+                    {
+                      "k": {
+                          "bytes": ""
+                        },
+                      "v": {
+                        "map":[
+                          { "k":
+                            {
+                              "bytes": ""
+                            },
+                            "v":
+                            {
+                              "int": 8000000
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
             },
             {
-              "map": [
+              "constructor": 0,
+              "fields": [
                 {
-                  "k": {
-                      "bytes": ""
-                    },
-                  "v": {
-                    "map":[
-                      { "k":
+                  "bytes": "$marketplacePkh"
+                },
+                {
+                  "map": [
+                    {
+                      "k":
                         {
                           "bytes": ""
                         },
-                        "v":
-                        {
-                          "int": 8000000
-                        }
+                      "v": {
+                        "map": [
+                          { "k":
+                            {
+                              "bytes": ""
+                            }
+                          ,
+                            "v":
+                            {
+                              "int": 1000000
+                            }
+                          }
+                        ]
                       }
-                    ]
-                  }
+                    }
+                  ]
                 }
               ]
-            }
-          ]
-        },
-        {
-          "constructor": 0,
-          "fields": [
-            {
-              "bytes": "$marketplacePkh"
             },
             {
-              "map": [
+              "constructor": 0,
+              "fields": [
                 {
-                  "k":
+                  "bytes": "$royaltyPkh"
+                },
+                {
+                  "map": [
                     {
-                      "bytes": ""
-                    },
-                  "v": {
-                    "map": [
-                      { "k":
-                        {
+                      "k": {
                           "bytes": ""
-                        }
-                      ,
-                        "v":
-                        {
-                          "int": 1000000
-                        }
+                        },
+                      "v": {
+                        "map": [
+                          {
+                            "k": {
+                          "bytes": ""
+                        },
+                            "v":
+                            {
+                              "int": 1000000
+                            }
+                          }
+                        ]
                       }
-                    ]
-                  }
+                    }
+                  ]
                 }
               ]
             }
           ]
         },
         {
-          "constructor": 0,
-          "fields": [
-            {
-              "bytes": "$royaltyPkh"
-            },
-            {
-              "map": [
-                {
-                  "k": {
-                      "bytes": ""
-                    },
-                  "v": {
-                    "map": [
-                      {
-                        "k": {
-                      "bytes": ""
-                    },
-                        "v":
-                        {
-                          "int": 1000000
-                        }
-                      }
-                    ]
-                  }
-                }
-              ]
-            }
-          ]
+          "int": $timestamp
+        },
+        {
+          "bytes": "$marketplacePkh"
         }
       ]
-    },
-    {
-      "int": $timestamp
-    },
-    {
-      "bytes": "$marketplacePkh"
     }
   ]
 }
