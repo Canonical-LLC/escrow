@@ -1435,6 +1435,7 @@
           "lazy-search".components.library.planned = lib.mkOverride 900 true;
           "abstract-deque".components.library.planned = lib.mkOverride 900 true;
           "mtl".components.library.planned = lib.mkOverride 900 true;
+          "canonical-escrow".components.exes."create-smart-contract".planned = lib.mkOverride 900 true;
           "time".components.library.planned = lib.mkOverride 900 true;
           "pretty-simple".components.setup.planned = lib.mkOverride 900 true;
           "iproute".components.library.planned = lib.mkOverride 900 true;

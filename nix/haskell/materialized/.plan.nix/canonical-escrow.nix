@@ -49,5 +49,20 @@
         modules = [ "Canonical/Escrow" ];
         hsSourceDirs = [ "src" ];
         };
+      exes = {
+        "create-smart-contract" = {
+          depends = [
+            (hsPkgs."base" or (errorHandler.buildDepError "base"))
+            (hsPkgs."bytestring" or (errorHandler.buildDepError "bytestring"))
+            (hsPkgs."cardano-api" or (errorHandler.buildDepError "cardano-api"))
+            (hsPkgs."canonical-escrow" or (errorHandler.buildDepError "canonical-escrow"))
+            (hsPkgs."plutus-ledger-api" or (errorHandler.buildDepError "plutus-ledger-api"))
+            (hsPkgs."cardano-ledger-alonzo" or (errorHandler.buildDepError "cardano-ledger-alonzo"))
+            ];
+          buildable = true;
+          hsSourceDirs = [ "app" ];
+          mainPath = [ "Main.hs" ];
+          };
+        };
       };
     } // rec { src = (pkgs.lib).mkDefault .././.; }
