@@ -2,11 +2,11 @@
 
 module Main where
 
-import Cardano.Api                         hiding (TxId)
+import Cardano.Api hiding (TxId)
 
 import Canonical.Escrow
-import System.Environment
 import Prelude
+import System.Environment
 
 main :: IO ()
 main = do

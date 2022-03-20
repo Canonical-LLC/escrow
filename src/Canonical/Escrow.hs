@@ -10,9 +10,10 @@
 
 module Canonical.Escrow
   ( Payout(..)
+  , Swap(..)
   , SwapState(..)
   , SwapTransition(..)
-  , swap
+  -- , swap
   ) where
 
 import Cardano.Api.Shelley (PlutusScript(..), PlutusScriptV1)
@@ -337,13 +338,13 @@ instance ValidatorTypes Swapping where
   type DatumType Swapping = SwapState
   type RedeemerType Swapping = SwapTransition
 
-validator :: TypedValidator Swapping
-validator =
-  mkTypedValidator @Swapping
-    $$(PlutusTx.compile [|| swapValidator ||])
-    $$(PlutusTx.compile [|| wrap ||])
-  where
-    wrap = wrapValidator
+-- validator :: TypedValidator Swapping
+-- validator =
+--   mkTypedValidator @Swapping
+--     $$(PlutusTx.compile [|| swapValidator ||])
+--     $$(PlutusTx.compile [|| wrap ||])
+--   where
+--     wrap = wrapValidator
 
-swap :: PlutusScript PlutusScriptV1
-swap = PlutusScriptSerialised $ SBS.toShort $ LB.toStrict $ serialise $ validatorScript validator
+-- swap :: PlutusScript PlutusScriptV1
+-- swap = PlutusScriptSerialised $ SBS.toShort $ LB.toStrict $ serialise $ validatorScript validator
