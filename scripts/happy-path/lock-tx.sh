@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 set -eux
 
 thisDir=$(dirname "$0")
@@ -6,8 +8,8 @@ tempDir=$baseDir/../temp
 
 DATUM_PREFIX=${1:-0}
 
-$baseDir/generate-datums.sh 100000
-$baseDir/hash-datums.sh 100000
+$baseDir/generate-datums.sh 1000000
+$baseDir/hash-datums.sh 1000000
 
 $baseDir/core/lock-1-input-tx.sh \
   $(cat ~/$BLOCKCHAIN_PREFIX/seller.addr) \
