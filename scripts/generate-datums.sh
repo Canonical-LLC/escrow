@@ -249,6 +249,10 @@ read -r -d '' TRUE << EOF || :
 { "constructor": 1, "fields": [] }
 EOF
 
+read -r -d '' FALSE << EOF || :
+{ "constructor": 0, "fields": [] }
+EOF
+
 cat << EOF > $tempDir/$BLOCKCHAIN_PREFIX/redeemers/$prefix/seller-approves.json
 {
   "constructor": 2,
@@ -258,6 +262,57 @@ cat << EOF > $tempDir/$BLOCKCHAIN_PREFIX/redeemers/$prefix/seller-approves.json
       "fields": [
         {
           "bytes": "$sellerPkh"
+        },
+        $TRUE
+      ]
+    }
+  ]
+}
+EOF
+
+cat << EOF > $tempDir/$BLOCKCHAIN_PREFIX/redeemers/$prefix/seller-rejects.json
+{
+  "constructor": 2,
+  "fields": [
+    {
+      "constructor": 0,
+      "fields": [
+        {
+          "bytes": "$sellerPkh"
+        },
+        $FALSE
+      ]
+    }
+  ]
+}
+EOF
+
+cat << EOF > $tempDir/$BLOCKCHAIN_PREFIX/redeemers/$prefix/mediator-rejects.json
+{
+  "constructor": 2,
+  "fields": [
+    {
+      "constructor": 0,
+      "fields": [
+        {
+          "bytes": "$marketplacePkh"
+        },
+        $FALSE
+      ]
+    }
+  ]
+}
+EOF
+
+cat << EOF > $tempDir/$BLOCKCHAIN_PREFIX/redeemers/$prefix/mediator-approves.json
+{
+  "constructor": 2,
+  "fields": [
+    {
+      "constructor": 0,
+      "fields": [
+        {
+          "bytes": "$marketplacePkh"
         },
         $TRUE
       ]
@@ -278,11 +333,33 @@ read -r -d '' APPROVEDBY_SELLER << EOF || :
 
 EOF
 
+read -r -d '' REJECTEDBY_SELLER << EOF || :
+{
+  "constructor": 2,
+  "fields": [
+    {
+      "bytes": "$sellerPkh"
+    }
+  ]
+}
+
+EOF
+
 cat << EOF > $tempDir/$BLOCKCHAIN_PREFIX/datums/$prefix/seller-approved.json
 {
   "constructor": 1,
   "fields": [
     $APPROVEDBY_SELLER,
+    $ESCROW
+  ]
+}
+EOF
+
+cat << EOF > $tempDir/$BLOCKCHAIN_PREFIX/datums/$prefix/seller-rejected.json
+{
+  "constructor": 1,
+  "fields": [
+    $REJECTEDBY_SELLER,
     $ESCROW
   ]
 }
@@ -305,44 +382,45 @@ cat << EOF > $tempDir/$BLOCKCHAIN_PREFIX/redeemers/$prefix/buyer-approves.json
 }
 EOF
 
-# cat << EOF > $tempDir/$BLOCKCHAIN_PREFIX/redeemers/$prefix/buy2.json
-# {
-#   "constructor": 1,
-#   "fields": [
-#     {
-#       "list": [
-#         {
-#           "constructor": 0,
-#           "fields": [
-#             {
-#               "bytes": "$buyerPkh"
-#             },
-#             {
-#               "map": [
-#                 {
-#                   "k": {
-#                     "bytes": "380eab015ac8e52853df3ac291f0511b8a1b7d9ee77248917eaeef10"
-#                   },
-#                   "v": {
-#                     "map": [
-#                       {
-#                         "k": {
-#                           "bytes": "123456"
-#                         },
-#                         "v": {
-#                           "int": 1
-#                         }
-#                       }
-#                     ]
-#                   }
-#                 }
-#               ]
-#             }
-#           ]
-#         }
-#       ]
-#     }
-#   ]
-# }
+cat << EOF > $tempDir/$BLOCKCHAIN_PREFIX/redeemers/$prefix/buyer-rejects.json
+{
+  "constructor": 2,
+  "fields": [
+    {
+      "constructor": 0,
+      "fields": [
+        {
+          "bytes": "$buyerPkh"
+        },
+        $FALSE
+      ]
+    }
+  ]
+}
+EOF
 
-# EOF
+
+read -r -d '' APPROVEDBYSELLER_REJECTEDBYBUYER << EOF || :
+{
+  "constructor": 3,
+  "fields": [
+    {
+      "bytes": "$sellerPkh"
+    },
+    {
+      "bytes": "$buyerPkh"
+    }
+  ]
+}
+EOF
+
+cat << EOF > $tempDir/$BLOCKCHAIN_PREFIX/datums/$prefix/buyer-rejected.json
+{
+  "constructor": 1,
+  "fields": [
+    $APPROVEDBYSELLER_REJECTEDBYBUYER,
+    $ESCROW
+  ]
+}
+EOF
+

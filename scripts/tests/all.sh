@@ -6,9 +6,12 @@ thisDir=$(dirname "$0")
 
 $thisDir/lock-cancel.sh
 $thisDir/lock-buy-approve-approve.sh
-# $thisDir/lock-buy-reject-reject.sh
-# $thisDir/lock-buy-reject-approve.sh
-# $thisDir/lock-buy-approve-reject-reject.sh
+
+$thisDir/lock-buy-reject-approve.sh
+$thisDir/lock-buy-approve-reject-approve.sh
+
+$thisDir/lock-buy-reject-reject.sh
+$thisDir/lock-buy-approve-reject-reject.sh
 
 # $thisDir/lock-buy-cancel.sh
 # $thisDir/nft-goes-to-wrong-address.sh

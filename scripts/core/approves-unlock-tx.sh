@@ -47,7 +47,7 @@ cardano-cli transaction build \
     --required-signer $signingKey \
     --tx-in-collateral $(cardano-cli-balance-fixer collateral --address $approverAddress $BLOCKCHAIN ) \
     --tx-out "$sellerAddr + $sellerAmount" \
-    --tx-out "$buyerAddr + $value" \
+    --tx-out "$buyerAddr + 1724100 lovelace + 1 $value" \
     --tx-out "$marketplaceAddr + $marketPlaceAmount" \
     --tx-out "$royalitiesAddr + $royalitiesAmount" \
     --tx-out "$approverAddress + 3000000 lovelace $extraOutput" \

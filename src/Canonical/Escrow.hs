@@ -13,7 +13,7 @@ module Canonical.Escrow
   , Swap(..)
   , SwapState(..)
   , SwapTransition(..)
-  -- , swap
+  , swap
   ) where
 
 import Cardano.Api.Shelley (PlutusScript(..), PlutusScriptV1)
@@ -236,7 +236,7 @@ swapValidator st t ctx =
           scriptInputIsValid = scriptInput `geq` unlockerPayoutValue
 
           outputsAreValid :: Bool
-          outputsAreValid = scriptOutputValue `geq` (unlockerPayoutValue <> swapPayoutValue)
+          outputsAreValid = scriptOutputValue `geq` (scriptInput <> swapPayoutValue)
 
           outputDatumIsValid :: Bool
           outputDatumIsValid = scriptOutputDatum == InEscrow NoApproval (Escrow s bp)
@@ -280,6 +280,8 @@ swapValidator st t ctx =
 
           outputDatumCheck = traceIfFalse "output datum is wrong"
 
+          mkApproval = if approves then ApprovedBy else RejectedBy
+
           buyerOwnerChecks = traceIfFalse "deadline passed, in mediation" isBeforeDeadline && case approval of
             RejectedBy _ -> traceError "rejected, in mediation"
 
@@ -291,7 +293,7 @@ swapValidator st t ctx =
               --
               -- we expect the output datum to be the same, but with the
               -- approval or rejection added
-              sOutGeqIn && outputDatumCheck (scriptOutputDatum == InEscrow (ApprovedBy pkh) escrow)
+              sOutGeqIn && outputDatumCheck (scriptOutputDatum == InEscrow (mkApproval pkh) escrow)
 
             ApprovedBy pkh' | pkh == pkh' ->
               -- user is either resubmitting their approval or we're going into mediation.
@@ -299,8 +301,7 @@ swapValidator st t ctx =
               --
               -- we expect the output datum to be the same, but with the
               -- approval or rejection replacing the previous value
-              let f = if approves then ApprovedBy else RejectedBy
-              in sOutGeqIn && outputDatumCheck (scriptOutputDatum == InEscrow (f pkh') escrow)
+              sOutGeqIn && outputDatumCheck (scriptOutputDatum == InEscrow (mkApproval pkh') escrow)
 
             ApprovedBy pkh' -> if approves
               then
@@ -338,13 +339,13 @@ instance ValidatorTypes Swapping where
   type DatumType Swapping = SwapState
   type RedeemerType Swapping = SwapTransition
 
--- validator :: TypedValidator Swapping
--- validator =
---   mkTypedValidator @Swapping
---     $$(PlutusTx.compile [|| swapValidator ||])
---     $$(PlutusTx.compile [|| wrap ||])
---   where
---     wrap = wrapValidator
+validator :: TypedValidator Swapping
+validator =
+  mkTypedValidator @Swapping
+    $$(PlutusTx.compile [|| swapValidator ||])
+    $$(PlutusTx.compile [|| wrap ||])
+  where
+    wrap = wrapValidator
 
--- swap :: PlutusScript PlutusScriptV1
--- swap = PlutusScriptSerialised $ SBS.toShort $ LB.toStrict $ serialise $ validatorScript validator
+swap :: PlutusScript PlutusScriptV1
+swap = PlutusScriptSerialised $ SBS.toShort $ LB.toStrict $ serialise $ validatorScript validator
