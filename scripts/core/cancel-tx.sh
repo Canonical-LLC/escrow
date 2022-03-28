@@ -40,7 +40,7 @@ cardano-cli transaction build \
     --tx-in-redeemer-file $redeemerFile \
     --required-signer $signingKey \
     --tx-in-collateral $(cardano-cli-balance-fixer collateral --address $walletAddr $BLOCKCHAIN) \
-    --tx-out "$outputAddr + $value" \
+    --tx-out "$outputAddr + 1724100 lovelace + 1 $value" \
     --tx-out "$walletAddr + 1724100 lovelace $extraOutput" \
     --change-address $walletAddr \
     --protocol-params-file scripts/$BLOCKCHAIN_PREFIX/protocol-parameters.json \
