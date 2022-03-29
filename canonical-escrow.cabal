@@ -1,6 +1,6 @@
 cabal-version: 2.4
 name:          canonical-escrow
-version:       0.1.0.0
+version:       1.0.0.0
 author:        Richard Wallace
 maintainer:    rwallace@canonicalllc.com
 License:             Apache-2.0
