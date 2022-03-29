@@ -18,7 +18,7 @@ $thisDir/lock-deadline-buy.sh
 $thisDir/lock-buy-deadline-approve.sh
 
 $thisDir/nft-goes-to-wrong-address.sh
-# $thisDir/too-little-ada.sh
+$thisDir/too-little-ada.sh
 # $thisDir/too-little-fees.sh
 # $thisDir/too-little-royalties.sh
 # $thisDir/wrong-nft.sh

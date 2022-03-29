@@ -16,7 +16,7 @@ jobs:
             substituters = https://hydra.iohk.io https://cache.nixos.org/
       - uses: cachix/cachix-action@v10
         with:
-          name: purefn
+          name: canonical-llc
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
       - run: echo $(uname -m)-$(uname -s) | tr '[:upper:]' '[:lower:]' | sed -E 's/^(.*)$/[ "\1" ]/' | tee supported-systems.nix
       - run: nix run .#update-materialized
