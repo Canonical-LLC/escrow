@@ -14,7 +14,7 @@ $thisDir/lock-buy-approve-reject-reject.sh
 $thisDir/lock-buy-cancel.sh
 $thisDir/lock-buy-reject-cancel.sh
 $thisDir/lock-deadline-buy.sh
-# $thisDir/lock-buy-deadline-approve.sh
+$thisDir/lock-buy-deadline-approve.sh
 
 $thisDir/nft-goes-to-wrong-address.sh
 # $thisDir/too-little-ada.sh
