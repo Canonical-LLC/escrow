@@ -10,6 +10,7 @@ $thisDir/lock-buy-reject-approve.sh
 $thisDir/lock-buy-approve-reject-approve.sh
 $thisDir/lock-buy-reject-reject.sh
 $thisDir/lock-buy-approve-reject-reject.sh
+$thisDir/lock-buy-deadline-mediator-approve.sh
 
 $thisDir/lock-buy-cancel.sh
 $thisDir/lock-buy-reject-cancel.sh
