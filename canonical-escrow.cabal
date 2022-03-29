@@ -32,7 +32,6 @@ library
     , bytestring
     , cardano-api
     , containers
-    , plutus-contract
     , plutus-ledger
     , plutus-ledger-api
     , plutus-tx

@@ -11,7 +11,6 @@ $baseDir/happy-path/lock-2-tx.sh
 $baseDir/wait/until-next-block.sh
 $baseDir/happy-path/buy-tx.sh
 $baseDir/wait/until-next-block.sh
-sleep 240s
+sleep 240
 $baseDir/happy-path/mediator-approves-3-tx.sh
 $baseDir/wait/until-next-block.sh
-

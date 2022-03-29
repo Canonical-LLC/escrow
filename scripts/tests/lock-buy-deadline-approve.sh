@@ -12,7 +12,7 @@ $baseDir/wait/until-next-block.sh
 $baseDir/happy-path/buy-tx.sh
 $baseDir/wait/until-next-block.sh
 
-sleep 240s
+sleep 240
 
 detected=false
 
@@ -23,5 +23,3 @@ detected=false
 if [ $detected == false ]; then
   exit 1
 fi
-
-
