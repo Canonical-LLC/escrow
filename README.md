@@ -66,7 +66,7 @@ This will make the files `scripts/testnet/escrow.addr` or `scripts/mainnet/escro
 
 ## Example Transactions
 
-The folder `scripts/core` has parameterized example transactions. This are used by the wrappers in `scripts/happy-path` and `scripts/failure-cases`. The various transactions are combined in test scripts in the folder `scripts/tests`.
+The folder `scripts/core` has parameterized example transactions. These are used by the wrappers in `scripts/happy-path` and `scripts/failure-cases`. The various transactions are combined in test scripts in the folder `scripts/tests`.
 
 ## Running the Tests
 
