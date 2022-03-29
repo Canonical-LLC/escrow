@@ -19,7 +19,7 @@ $baseDir/wait/until-next-block.sh
 
 detected=false
 
-"$baseDir/failure-cases/buyer-approves-too-little-ada-swap-tx.sh" || {
+"$baseDir/failure-cases/buyer-approves-too-little-fees-tx.sh" || {
   detected=true
 }
 
