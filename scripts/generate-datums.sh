@@ -330,6 +330,17 @@ read -r -d '' APPROVEDBY_SELLER << EOF || :
     }
   ]
 }
+EOF
+
+read -r -d '' APPROVEDBY_BUYER << EOF || :
+{
+  "constructor": 1,
+  "fields": [
+    {
+      "bytes": "$buyerPkh"
+    }
+  ]
+}
 
 EOF
 
@@ -350,6 +361,16 @@ cat << EOF > $tempDir/$BLOCKCHAIN_PREFIX/datums/$prefix/seller-approved.json
   "constructor": 1,
   "fields": [
     $APPROVEDBY_SELLER,
+    $ESCROW
+  ]
+}
+EOF
+
+cat << EOF > $tempDir/$BLOCKCHAIN_PREFIX/datums/$prefix/buyer-approved.json
+{
+  "constructor": 1,
+  "fields": [
+    $APPROVEDBY_BUYER,
     $ESCROW
   ]
 }

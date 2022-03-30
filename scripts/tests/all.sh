@@ -5,7 +5,8 @@ set -eux
 thisDir=$(dirname "$0")
 
 $thisDir/lock-cancel.sh
-$thisDir/lock-buy-approve-approve.sh
+$thisDir/lock-buy-sellerapprove-buyerapprove.sh
+$thisDir/lock-buy-buyerapprove-sellerapprove.sh
 $thisDir/lock-buy-reject-approve.sh
 $thisDir/lock-buy-approve-reject-approve.sh
 $thisDir/lock-buy-reject-reject.sh
