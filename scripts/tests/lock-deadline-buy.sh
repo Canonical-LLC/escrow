@@ -7,7 +7,7 @@ baseDir=$thisDir/..
 
 $baseDir/minting/mint-0-policy.sh
 $baseDir/wait/until-next-block.sh
-$baseDir/happy-path/lock-1-tx.sh
+$baseDir/happy-path/lock-deadlinepassed-tx.sh
 $baseDir/wait/until-next-block.sh
 
 detected=false

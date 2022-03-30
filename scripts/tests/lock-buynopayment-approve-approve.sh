@@ -7,10 +7,12 @@ baseDir=$thisDir/..
 
 $baseDir/minting/mint-0-policy.sh
 $baseDir/wait/until-next-block.sh
-$baseDir/happy-path/lock-shortdeadline-tx.sh
+$baseDir/happy-path/nopayment/lock-tx.sh
 $baseDir/wait/until-next-block.sh
-$baseDir/happy-path/buy-tx.sh
+$baseDir/happy-path/nopayment/buy-tx.sh
 $baseDir/wait/until-next-block.sh
-sleep 240
-$baseDir/happy-path/mediator-approves-3-tx.sh
+$baseDir/happy-path/nopayment/seller-approves-tx.sh
 $baseDir/wait/until-next-block.sh
+$baseDir/happy-path/nopayment/buyer-approves-tx.sh
+$baseDir/wait/until-next-block.sh
+

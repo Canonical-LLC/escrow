@@ -445,3 +445,84 @@ cat << EOF > $tempDir/$BLOCKCHAIN_PREFIX/datums/$prefix/buyer-rejected.json
 }
 EOF
 
+read -r -d '' OFFER_NOPAY << EOF || :
+    {
+      "constructor": 0,
+      "fields": [
+        {
+          "bytes": "$sellerPkh"
+        },
+        {
+          "map": [
+            {
+              "k": {
+                "bytes": "d6cfdbedd242056674c0e51ead01785497e3a48afbbb146dc72ee1e2"
+              },
+              "v": {
+                "map": [
+                  {
+                    "k": {
+                      "bytes": "123456"
+                    },
+                    "v": {
+                      "int": 1
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "list": [
+          ]
+        },
+        {
+          "int": $timestamp
+        },
+        {
+          "bytes": "$marketplacePkh"
+        }
+      ]
+    }
+EOF
+
+cat << EOF > $tempDir/$BLOCKCHAIN_PREFIX/datums/$prefix/offer-nopayment.json
+{ "constructor": 0,
+  "fields": [
+    $OFFER_NOPAY
+  ]
+}
+
+EOF
+
+
+read -r -d '' ESCROW_NOPAY << EOF || :
+    {
+      "constructor": 0,
+      "fields": [
+        $OFFER_NOPAY,
+        $BUYPAYOUTS
+      ]
+    }
+EOF
+
+cat << EOF > $tempDir/$BLOCKCHAIN_PREFIX/datums/$prefix/buy-nopayment.json
+{
+  "constructor": 1,
+  "fields": [
+    $NOAPPROVAL,
+    $ESCROW_NOPAY
+  ]
+}
+
+EOF
+cat << EOF > $tempDir/$BLOCKCHAIN_PREFIX/datums/$prefix/seller-approved-nopayment.json
+{
+  "constructor": 1,
+  "fields": [
+    $APPROVEDBY_SELLER,
+    $ESCROW_NOPAY
+  ]
+}
+EOF
