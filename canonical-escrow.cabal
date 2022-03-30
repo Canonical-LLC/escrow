@@ -1,8 +1,10 @@
 cabal-version: 2.4
 name:          canonical-escrow
-version:       0.1.0.0
+version:       1.0.0.0
 author:        Richard Wallace
 maintainer:    rwallace@canonicalllc.com
+License:             Apache-2.0
+License-files:       LICENSE
 
 flag defer-plugin-errors
   description:
@@ -32,7 +34,6 @@ library
     , bytestring
     , cardano-api
     , containers
-    , plutus-contract
     , plutus-ledger
     , plutus-ledger-api
     , plutus-tx

@@ -2,4 +2,5 @@
 /.tmp
 /result
 /dist-newstyle
-
+temp
+.DS_Store
