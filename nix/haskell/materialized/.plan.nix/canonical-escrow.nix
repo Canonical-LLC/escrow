@@ -11,8 +11,8 @@
     flags = { defer-plugin-errors = false; };
     package = {
       specVersion = "2.4";
-      identifier = { name = "canonical-escrow"; version = "0.1.0.0"; };
-      license = "NONE";
+      identifier = { name = "canonical-escrow"; version = "1.0.0.0"; };
+      license = "Apache-2.0";
       copyright = "";
       maintainer = "rwallace@canonicalllc.com";
       author = "Richard Wallace";
@@ -23,7 +23,7 @@
       buildType = "Simple";
       isLocal = true;
       detailLevel = "FullDetails";
-      licenseFiles = [];
+      licenseFiles = [ "LICENSE" ];
       dataDir = ".";
       dataFiles = [];
       extraSrcFiles = [];
@@ -38,7 +38,6 @@
           (hsPkgs."bytestring" or (errorHandler.buildDepError "bytestring"))
           (hsPkgs."cardano-api" or (errorHandler.buildDepError "cardano-api"))
           (hsPkgs."containers" or (errorHandler.buildDepError "containers"))
-          (hsPkgs."plutus-contract" or (errorHandler.buildDepError "plutus-contract"))
           (hsPkgs."plutus-ledger" or (errorHandler.buildDepError "plutus-ledger"))
           (hsPkgs."plutus-ledger-api" or (errorHandler.buildDepError "plutus-ledger-api"))
           (hsPkgs."plutus-tx" or (errorHandler.buildDepError "plutus-tx"))
@@ -65,4 +64,4 @@
           };
         };
       };
-    } // rec { src = (pkgs.lib).mkDefault .././.; }
+    } // rec { src = (pkgs.lib).mkDefault ../.; }

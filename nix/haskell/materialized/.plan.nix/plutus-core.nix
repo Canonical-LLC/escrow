@@ -86,7 +86,6 @@
           (hsPkgs."serialise" or (errorHandler.buildDepError "serialise"))
           (hsPkgs."size-based" or (errorHandler.buildDepError "size-based"))
           (hsPkgs."some" or (errorHandler.buildDepError "some"))
-          (hsPkgs."sop-core" or (errorHandler.buildDepError "sop-core"))
           (hsPkgs."tasty" or (errorHandler.buildDepError "tasty"))
           (hsPkgs."tasty-golden" or (errorHandler.buildDepError "tasty-golden"))
           (hsPkgs."tasty-hedgehog" or (errorHandler.buildDepError "tasty-hedgehog"))
@@ -111,6 +110,7 @@
         modules = [
           "PlutusCore/Analysis/Definitions"
           "PlutusCore/Constant/Function"
+          "PlutusCore/Constant/Kinded"
           "PlutusCore/Constant/Meaning"
           "PlutusCore/Constant/Typed"
           "PlutusCore/Core/Instance"
@@ -290,7 +290,6 @@
           "PlutusIR/TypeCheck"
           "UntypedPlutusCore"
           "UntypedPlutusCore/DeBruijn"
-          "UntypedPlutusCore/Evaluation/HOAS"
           "UntypedPlutusCore/Evaluation/Machine/Cek"
           "UntypedPlutusCore/Evaluation/Machine/Cek/Internal"
           "UntypedPlutusCore/Parser"
@@ -334,6 +333,7 @@
         "plc" = {
           depends = [
             (hsPkgs."plutus-core" or (errorHandler.buildDepError "plutus-core"))
+            (hsPkgs."aeson" or (errorHandler.buildDepError "aeson"))
             (hsPkgs."base" or (errorHandler.buildDepError "base"))
             (hsPkgs."bytestring" or (errorHandler.buildDepError "bytestring"))
             (hsPkgs."deepseq" or (errorHandler.buildDepError "deepseq"))
@@ -374,6 +374,7 @@
         "pir" = {
           depends = [
             (hsPkgs."plutus-core" or (errorHandler.buildDepError "plutus-core"))
+            (hsPkgs."aeson" or (errorHandler.buildDepError "aeson"))
             (hsPkgs."base" or (errorHandler.buildDepError "base"))
             (hsPkgs."bytestring" or (errorHandler.buildDepError "bytestring"))
             (hsPkgs."flat" or (errorHandler.buildDepError "flat"))
@@ -404,6 +405,7 @@
             (hsPkgs."vector" or (errorHandler.buildDepError "vector"))
             ];
           buildable = true;
+          modules = [ "Common" ];
           hsSourceDirs = [ "executables/traceToStacks" ];
           mainPath = [ "Main.hs" ];
           };
@@ -512,9 +514,25 @@
             "Evaluation/Golden"
             "Evaluation/Machines"
             "Transform/Simplify"
+            "DeBruijn/Spec"
             ];
           hsSourceDirs = [ "untyped-plutus-core/test" ];
           mainPath = [ "Spec.hs" ];
+          };
+        "traceToStacks-test" = {
+          depends = [
+            (hsPkgs."base" or (errorHandler.buildDepError "base"))
+            (hsPkgs."bytestring" or (errorHandler.buildDepError "bytestring"))
+            (hsPkgs."cassava" or (errorHandler.buildDepError "cassava"))
+            (hsPkgs."tasty" or (errorHandler.buildDepError "tasty"))
+            (hsPkgs."tasty-hunit" or (errorHandler.buildDepError "tasty-hunit"))
+            (hsPkgs."text" or (errorHandler.buildDepError "text"))
+            (hsPkgs."vector" or (errorHandler.buildDepError "vector"))
+            ];
+          buildable = true;
+          modules = [ "Common" ];
+          hsSourceDirs = [ "executables/traceToStacks" ];
+          mainPath = [ "TestGetStacks.hs" ];
           };
         "index-envs-test" = {
           depends = [
@@ -597,11 +615,12 @@
             (hsPkgs."hedgehog" or (errorHandler.buildDepError "hedgehog"))
             (hsPkgs."inline-r" or (errorHandler.buildDepError "inline-r"))
             (hsPkgs."mmorph" or (errorHandler.buildDepError "mmorph"))
+            (hsPkgs."template-haskell" or (errorHandler.buildDepError "template-haskell"))
             (hsPkgs."text" or (errorHandler.buildDepError "text"))
             (hsPkgs."vector" or (errorHandler.buildDepError "vector"))
             ];
           buildable = true;
-          modules = [ "CostModelCreation" ];
+          modules = [ "TH" "CostModelCreation" ];
           hsSourceDirs = [ "cost-model/test" "cost-model/create-cost-model" ];
           };
         "index-envs-bench" = {
@@ -619,11 +638,11 @@
       };
     } // {
     src = (pkgs.lib).mkDefault (pkgs.fetchgit {
-      url = "16";
+      url = "11";
       rev = "minimal";
       sha256 = "";
       }) // {
-      url = "16";
+      url = "11";
       rev = "minimal";
       sha256 = "";
       };

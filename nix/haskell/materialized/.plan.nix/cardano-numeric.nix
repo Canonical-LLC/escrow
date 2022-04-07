@@ -55,17 +55,17 @@
           buildable = true;
           modules = [ "Cardano/Numeric/UtilSpec" ];
           hsSourceDirs = [ "test/unit" ];
-          mainPath = [ "Main.hs" ];
+          mainPath = [ "numeric-unit-test.hs" ];
           };
         };
       };
     } // {
     src = (pkgs.lib).mkDefault (pkgs.fetchgit {
-      url = "8";
+      url = "13";
       rev = "minimal";
       sha256 = "";
       }) // {
-      url = "8";
+      url = "13";
       rev = "minimal";
       sha256 = "";
       };

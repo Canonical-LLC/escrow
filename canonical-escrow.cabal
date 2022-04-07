@@ -3,8 +3,8 @@ name:          canonical-escrow
 version:       1.0.0.0
 author:        Richard Wallace
 maintainer:    rwallace@canonicalllc.com
-License:             Apache-2.0
-License-files:       LICENSE
+license:       Apache-2.0
+license-files: LICENSE
 
 flag defer-plugin-errors
   description:

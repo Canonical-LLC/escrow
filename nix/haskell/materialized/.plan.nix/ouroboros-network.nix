@@ -69,14 +69,16 @@
           (hsPkgs."io-classes" or (errorHandler.buildDepError "io-classes"))
           (hsPkgs."network-mux" or (errorHandler.buildDepError "network-mux"))
           (hsPkgs."ouroboros-network-framework" or (errorHandler.buildDepError "ouroboros-network-framework"))
+          (hsPkgs."strict-stm" or (errorHandler.buildDepError "strict-stm"))
           (hsPkgs."typed-protocols" or (errorHandler.buildDepError "typed-protocols"))
           (hsPkgs."typed-protocols-cborg" or (errorHandler.buildDepError "typed-protocols-cborg"))
           (hsPkgs."hashable" or (errorHandler.buildDepError "hashable"))
           (hsPkgs."text" or (errorHandler.buildDepError "text"))
           (hsPkgs."time" or (errorHandler.buildDepError "time"))
-          ];
+          ] ++ (pkgs.lib).optional (!system.isWindows) (hsPkgs."unix" or (errorHandler.buildDepError "unix"));
         buildable = true;
         modules = [
+          "Ouroboros/Network/Diffusion/Common"
           "Ouroboros/Network/PeerSelection/Governor/ActivePeers"
           "Ouroboros/Network/PeerSelection/Governor/EstablishedPeers"
           "Ouroboros/Network/PeerSelection/Governor/KnownPeers"
@@ -93,9 +95,11 @@
           "Ouroboros/Network/BlockFetch/Decision"
           "Ouroboros/Network/BlockFetch/DeltaQ"
           "Ouroboros/Network/BlockFetch/State"
-          "Ouroboros/Network/Counter"
           "Ouroboros/Network/DeltaQ"
           "Ouroboros/Network/Diffusion"
+          "Ouroboros/Network/Diffusion/P2P"
+          "Ouroboros/Network/Diffusion/NonP2P"
+          "Ouroboros/Network/Diffusion/Policies"
           "Ouroboros/Network/KeepAlive"
           "Ouroboros/Network/Magic"
           "Ouroboros/Network/NodeToNode"
@@ -109,6 +113,9 @@
           "Ouroboros/Network/PeerSelection/KnownPeers"
           "Ouroboros/Network/PeerSelection/LedgerPeers"
           "Ouroboros/Network/PeerSelection/LocalRootPeers"
+          "Ouroboros/Network/PeerSelection/PeerMetric"
+          "Ouroboros/Network/PeerSelection/PeerMetric/Type"
+          "Ouroboros/Network/PeerSelection/PeerStateActions"
           "Ouroboros/Network/PeerSelection/RelayAccessPoint"
           "Ouroboros/Network/PeerSelection/RootPeersDNS/DNSActions"
           "Ouroboros/Network/PeerSelection/RootPeersDNS"
@@ -168,8 +175,10 @@
             (hsPkgs."bytestring" or (errorHandler.buildDepError "bytestring"))
             (hsPkgs."cborg" or (errorHandler.buildDepError "cborg"))
             (hsPkgs."containers" or (errorHandler.buildDepError "containers"))
+            (hsPkgs."hashable" or (errorHandler.buildDepError "hashable"))
             (hsPkgs."pipes" or (errorHandler.buildDepError "pipes"))
             (hsPkgs."QuickCheck" or (errorHandler.buildDepError "QuickCheck"))
+            (hsPkgs."quickcheck-instances" or (errorHandler.buildDepError "quickcheck-instances"))
             (hsPkgs."serialise" or (errorHandler.buildDepError "serialise"))
             (hsPkgs."strict-containers" or (errorHandler.buildDepError "strict-containers"))
             (hsPkgs."tasty" or (errorHandler.buildDepError "tasty"))
@@ -179,8 +188,11 @@
             (hsPkgs."contra-tracer" or (errorHandler.buildDepError "contra-tracer"))
             (hsPkgs."io-classes" or (errorHandler.buildDepError "io-classes"))
             (hsPkgs."io-sim" or (errorHandler.buildDepError "io-sim"))
+            (hsPkgs."network-mux" or (errorHandler.buildDepError "network-mux"))
             (hsPkgs."ouroboros-network" or (errorHandler.buildDepError "ouroboros-network"))
             (hsPkgs."ouroboros-network-framework" or (errorHandler.buildDepError "ouroboros-network-framework"))
+            (hsPkgs."ouroboros-network-testing" or (errorHandler.buildDepError "ouroboros-network-testing"))
+            (hsPkgs."strict-stm" or (errorHandler.buildDepError "strict-stm"))
             (hsPkgs."typed-protocols" or (errorHandler.buildDepError "typed-protocols"))
             ];
           buildable = true;
@@ -270,11 +282,13 @@
             (hsPkgs."nothunks" or (errorHandler.buildDepError "nothunks"))
             (hsPkgs."io-classes" or (errorHandler.buildDepError "io-classes"))
             (hsPkgs."io-sim" or (errorHandler.buildDepError "io-sim"))
+            (hsPkgs."monoidal-synchronisation" or (errorHandler.buildDepError "monoidal-synchronisation"))
             (hsPkgs."network-mux" or (errorHandler.buildDepError "network-mux"))
             (hsPkgs."ouroboros-network" or (errorHandler.buildDepError "ouroboros-network"))
             (hsPkgs."ouroboros-network-framework" or (errorHandler.buildDepError "ouroboros-network-framework"))
             (hsPkgs."ouroboros-network-testing" or (errorHandler.buildDepError "ouroboros-network-testing"))
             (hsPkgs."ouroboros-network".components.sublibs.ouroboros-protocol-tests or (errorHandler.buildDepError "ouroboros-network:ouroboros-protocol-tests"))
+            (hsPkgs."strict-stm" or (errorHandler.buildDepError "strict-stm"))
             (hsPkgs."typed-protocols" or (errorHandler.buildDepError "typed-protocols"))
             (hsPkgs."typed-protocols-examples" or (errorHandler.buildDepError "typed-protocols-examples"))
             ] ++ (pkgs.lib).optionals (system.isWindows) [
@@ -285,10 +299,13 @@
           modules = [
             "Ouroboros/Network/BlockFetch/Examples"
             "Ouroboros/Network/MockNode"
-            "Data/Signal"
             "Test/AnchoredFragment"
             "Test/Chain"
             "Test/LedgerPeers"
+            "Test/Ouroboros/Network/Diffusion/Node"
+            "Test/Ouroboros/Network/Diffusion/Node/NodeKernel"
+            "Test/Ouroboros/Network/Diffusion/Node/MiniProtocols"
+            "Test/Ouroboros/Network/Diffusion/Policies"
             "Test/Ouroboros/Network/BlockFetch"
             "Test/Ouroboros/Network/KeepAlive"
             "Test/Ouroboros/Network/MockNode"
@@ -300,7 +317,6 @@
             "Test/Ouroboros/Network/PeerSelection/Json"
             "Test/Ouroboros/Network/PeerSelection/MockEnvironment"
             "Test/Ouroboros/Network/PeerSelection/PeerGraph"
-            "Test/Ouroboros/Network/PeerSelection/Script"
             "Test/Ouroboros/Network/NodeToNode/Version"
             "Test/Ouroboros/Network/NodeToClient/Version"
             "Test/Mux"
@@ -308,8 +324,6 @@
             "Test/Socket"
             "Test/PeerState"
             "Test/Version"
-            "Test/QuickCheck/Signal"
-            "Test/QuickCheck/Utils"
             ];
           hsSourceDirs = [ "test" ];
           mainPath = [ "Main.hs" ];
@@ -345,11 +359,11 @@
       };
     } // {
     src = (pkgs.lib).mkDefault (pkgs.fetchgit {
-      url = "9";
+      url = "10";
       rev = "minimal";
       sha256 = "";
       }) // {
-      url = "9";
+      url = "10";
       rev = "minimal";
       sha256 = "";
       };
