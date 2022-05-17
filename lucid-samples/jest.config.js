@@ -2,23 +2,22 @@ module.exports = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
-  transform: {
-    '^.+\\.ts$': 'ts-jest',
-    '^.+\\.js$': 'babel-jest',
-  },
+ transform: {
+    "^.+\\.(ts|tsx|js)$": "ts-jest"
+ },
   testMatch: ['<rootDir>/src/**/*.spec.{js,jsx,ts,tsx}'],
   collectCoverage: true,
   coverageDirectory: './coverage',
   collectCoverageFrom: [
     'src/**/*.{js,jsx,ts,tsx}',
-    '!src/index.ts',
-    '!src/@types/**/*',
   ],
   globals: {
     'ts-jest': {
       isolatedModules: true,
+      useESM: true,
     },
   },
+  extensionsToTreatAsEsm: [".ts"],
   coverageThreshold: {
     global: {
       branches: 80,
