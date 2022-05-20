@@ -94,12 +94,12 @@ isScriptAddress Address { addressCredential } = case addressCredential of
 
 -- Verify that there is only one script input and get it's value.
 getOnlyScriptInput :: TxInfo -> Value
-getOnlyScriptInput info =
+getOnlyScriptInput TxInfo {..} =
   let
     isScriptInput :: TxInInfo -> Bool
     isScriptInput = isScriptAddress . txOutAddress . txInInfoResolved
 
-    input = case filter isScriptInput . txInfoInputs $ info of
+    input = case filter isScriptInput txInfoInputs of
       [i] -> i
       _ -> traceError "expected exactly one script input"
   in txOutValue . txInInfoResolved $ input
