@@ -6013,10 +6013,10 @@
   dependencies:
     "yallist" "^4.0.0"
 
-"lucid-cardano@^0.2.5":
-  "integrity" "sha512-uzn0EpwvAH2dVhrNeiF0ToGPDWFcyG2W0DE7OAi374VEzUtiQyUOe8GefM6V3xpwmV7gDhUErdY/Tth0GcGFUw=="
-  "resolved" "https://registry.npmjs.org/lucid-cardano/-/lucid-cardano-0.2.5.tgz"
-  "version" "0.2.5"
+"lucid-cardano@~0.2.8":
+  "integrity" "sha512-8zLyzoA5J38DXNL95NcqQATdykm5G32jxWfyt23rwqbsPgEfhyMrHZbnFVTTc5u9hXMO+F+EyVs7c5q0dpr2bw=="
+  "resolved" "https://registry.npmjs.org/lucid-cardano/-/lucid-cardano-0.2.9.tgz"
+  "version" "0.2.9"
   dependencies:
     "node-fetch" "^3.2.3"
 

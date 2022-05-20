@@ -113,6 +113,6 @@
     "not IE < 11"
   ],
   "dependencies": {
-    "lucid-cardano": "^0.2.5"
+    "lucid-cardano": "~0.2.8"
   }
 }
