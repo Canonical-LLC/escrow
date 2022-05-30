@@ -397,7 +397,6 @@ export const sellerRejectedDatum: Data = Data.to(
   ]),
 );
 
-
 export const cancelRedeemer: Data = Data.to(
   new Construct(2, [
     new Construct(0, [
